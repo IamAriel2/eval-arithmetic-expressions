@@ -21,17 +21,12 @@ This project is a C program that reads a mathematical expression involving compl
     (3+5*i)*(2-4*i)
     ```
 
-2. **Compile the Program**: Compile the source code using a C compiler. For example:
-    ```sh
-    gcc main.c -o main
-    ```
-
-3. **Run the Program**: Execute the compiled program. It will read the expression from `input.txt`, evaluate it, and write the result to `output.txt`.
+2. **Run the Program**: Execute the compiled program. It will read the expression from `input.txt`, evaluate it, and write the result to `output.txt`.
     ```sh
     ./main
     ```
 
-4. **Check the Output**: Open the `output.txt` file to see the result of the evaluated expression.
+3. **Check the Output**: Open the `output.txt` file to see the result of the evaluated expression.
 
 ## Example
 
