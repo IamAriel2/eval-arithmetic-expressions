@@ -1,4 +1,4 @@
-# Complex Number Expression Evaluator
+# Arithmetic Expressions Evaluator
 
 This project is a C program that reads a mathematical expression involving complex numbers from an input file, evaluates the expression, and writes the result to an output file.
 
