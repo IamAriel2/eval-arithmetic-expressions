@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <math.h>
 
-extern char *exp_ptr; // The global pointer to the expression
+extern char *exp_ptr;
 
 Pointer *create_number(double real, double img)
 {
@@ -23,15 +23,6 @@ Pointer *create_operator(char type, Pointer *left, Pointer *right)
     p->f.o.left = left;
     p->f.o.right = right;
     return p;
-}
-
-Pointer *solve_tree(Pointer *p)
-{
-    if (p->type == 'n')
-        return p;
-    p->f.o.left = solve_tree(p->f.o.left);
-    p->f.o.right = solve_tree(p->f.o.right);
-    return execute_operator(p);
 }
 
 void scan_tree(Pointer *p)

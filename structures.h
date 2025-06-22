@@ -1,10 +1,9 @@
 #pragma once
 
+#include "structures.h"
 #define MAX 100
 
-typedef struct pointer Pointer;
-
-struct pointer
+typedef struct pointer
 {
     char type;
     union
@@ -19,11 +18,10 @@ struct pointer
             double real, img;
         } n;
     } f;
-};
+} Pointer;
 
 Pointer *create_number(double, double);
 Pointer *create_operator(char, Pointer *, Pointer *);
-Pointer *solve_tree(Pointer *);
 void scan_tree(Pointer *);
 char is_a_number(char);
 char is_an_opr(char);
