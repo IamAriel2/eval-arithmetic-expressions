@@ -21,6 +21,7 @@ int main()
         }
         fputs("1+1", input);
         fclose(input);
+        input = fopen("input.txt", "r");
     }
     char exp[MAX];
     if (fgets(exp, sizeof(exp), input) == NULL)
