@@ -1,38 +1,8 @@
+#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#define MAX 100 // The maximum length of the expression
-
-typedef struct pointer
-{
-    char type;
-    union
-    {
-        struct
-        {
-            char type;
-            struct pointer *left, *right;
-        } o;
-        struct
-        {
-            double real, img;
-        } n;
-    } f;
-} Pointer;
-
-Pointer *brackets_handler();
-void create_tree(Pointer *[4]);
-Pointer *create_number(double, double);
-Pointer *create_operator(char, Pointer *, Pointer *);
-Pointer *solve_tree(Pointer *);
-void scan_tree(Pointer *); // Testing function
-char is_a_number(char);
-char is_an_opr(char);
-Pointer *read_number();
-char *print_number(Pointer *);
-Pointer *read_operator();
-Pointer *execute_operator(Pointer *);
 
 char *exp_ptr = NULL;   // The global pointer to the expression
 int brackets_count = 0; // For validation of the brackets
@@ -89,12 +59,14 @@ Pointer *brackets_handler()
         exp_ptr++;
         brackets_count--;
     }
-    if (oprs[0] == NULL)
+    if (oprs[0] == NULL) // If there was an error in creating the tree, we return NULL.
         return NULL;
     solve_tree(root);
     return root;
 }
 
+// Creating a tree ignoring the brackets inside.
+// If there are brackets, we let the function brackets_handler handle it.
 void create_tree(Pointer *oprs[4])
 {
     // Reading the number:
@@ -112,8 +84,18 @@ void create_tree(Pointer *oprs[4])
 
     if (number == NULL)
     {
-        oprs[0] = NULL;
-        return;
+        // Handling the case where the expressions starts with a negative number.
+        // If the first character is a minus sign, we multiply the number by -1.
+        if (*exp_ptr == '-')
+        {
+            number = create_number(-1, 0);
+            *exp_ptr = '*';
+        }
+        else
+        {
+            oprs[0] = NULL;
+            return;
+        }
     }
     // Reading the operator:
     if (*exp_ptr == '\0' || *exp_ptr == ')')
@@ -121,8 +103,8 @@ void create_tree(Pointer *oprs[4])
         oprs[0]->f.o.left = number;
         return;
     }
-    Pointer *operator= read_operator();
-    if (operator== NULL)
+    Pointer *operator = read_operator();
+    if (operator == NULL)
     {
         oprs[0] = NULL;
         return;
@@ -130,9 +112,11 @@ void create_tree(Pointer *oprs[4])
     operator->f.o.left = number;
 
     create_tree(oprs);
-    if (oprs[0] == 0) // Meaning the there is an error
+    if (oprs[0] == 0) // Meaning that there is an error.
         return;
-    // Linking the current operator to the tree:
+    // Linking the current operator to the tree.
+    // Finding the right place for the operator in the tree.
+    // The operator is placed in the tree according to its precedence.
     char pr = is_an_opr(operator->f.o.type), i;
     for (i = pr; i >= 0 && oprs[i] == NULL; i--)
         ;
@@ -171,7 +155,6 @@ Pointer *solve_tree(Pointer *p)
     return execute_operator(p);
 }
 
-// Testing function
 void scan_tree(Pointer *p)
 {
     if (p->type == 'n')
@@ -284,12 +267,12 @@ Pointer *execute_operator(Pointer *opr)
         opr->f.n.img = (left_img * right_real - left_real * right_img) / denom;
         break;
     case '^':
-        if (right_img != 0)
-            return NULL;
-        double r = left_real * left_real + left_img * left_img;
+        double r = sqrt(left_real * left_real + left_img * left_img);
         double theta = atan2(left_img, left_real);
-        opr->f.n.real = pow(r, right_real) * cos(right_real * theta);
-        opr->f.n.img = pow(r, right_real) * sin(right_real * theta);
+        double rn = pow(r, right_real);
+        double angle = right_real * theta;
+        opr->f.n.real = rn * cos(angle);
+        opr->f.n.img = rn * sin(angle);
         break;
     }
 }
