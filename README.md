@@ -32,7 +32,7 @@ This project is a C program that reads a mathematical expression involving compl
 
 Given the input expression in `input.txt`:
 ```txt
-(3+5*i)*(2-4*i)
+(3+5i)*(2-4i)
 ```
 
 The output in `output.txt` will be:
