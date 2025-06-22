@@ -23,7 +23,8 @@ This project is a C program that reads a mathematical expression involving compl
 
 2. **Run the Program**: Execute the compiled program. It will read the expression from `input.txt`, evaluate it, and write the result to `output.txt`.
     ```sh
-    ./main
+    gcc main.c structures.c -o evaluator
+    ./evaluator
     ```
 
 3. **Check the Output**: Open the `output.txt` file to see the result of the evaluated expression.
