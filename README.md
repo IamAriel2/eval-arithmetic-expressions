@@ -1,4 +1,4 @@
-# Arithmetic Expressions Evaluator
+# Binary Tree Calculator
 
 This project is a C program that reads a mathematical expression involving complex numbers from an input file, evaluates the expression, and writes the result to an output file.
 
